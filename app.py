@@ -56,3 +56,17 @@ def returnques(name,ids):
         all_docs=json_util.dumps(x)
 
     return jsonify(all_docs)
+
+@app.route('/<name>/<ids>/<con>',methods=['GET','POST'])
+def returnques1(name,ids,con):
+    global query
+    print(ids)
+    query = {'_id':ObjectId(ids)}
+    all_docs=[]
+
+    alldocs1 = db[name].find(query)
+    for x in alldocs1:
+        print(x)
+        all_docs=json_util.dumps(x)
+
+    return jsonify(all_docs)

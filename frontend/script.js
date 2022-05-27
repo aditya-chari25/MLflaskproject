@@ -1,6 +1,8 @@
-document.getElementById('formData').addEventListener('submit', retrieveName)
 var name
 var id_selected
+
+document.getElementById('formData').addEventListener('submit', retrieveName)
+
 function retrieveName (e) {
     e.preventDefault()
 
@@ -33,7 +35,6 @@ document.getElementById('output').addEventListener('submit', retrieveID)
 
 function retrieveID(e){
     e.preventDefault()
-
     var radios = document.getElementsByName('nameid')
     for (var radio of radios)
     {
@@ -42,17 +43,20 @@ function retrieveID(e){
             console.log(radio.value)
         }
     }
+    localStorage.setItem("file_ml",window.name)
+    console.log(window.id_selected)
+    localStorage.setItem("idq",window.id_selected)
+    window.open("updation.html")
     fetch(`http://localhost:5000/${window.name}/${window.id_selected}`)
     .then((res)=> res.json())
     .then((data)=> {
         data = JSON.parse(data)
-        console.log(data["contents"][0])
         text=""
         for(i=0;i<data["contents"].length;i++){
-            text = text + `<input type="radio" id="hello" name="nameid" value=${data["contents"][i]} class="list-group-item">
-            <label for="hello">${data["contents"][i]}</label>` + "<br>";
+            text = text + `<p>${data["contents"][i]}</p>`;
         }
         document.getElementById("context-q").innerHTML=text
     })
 
 }
+
