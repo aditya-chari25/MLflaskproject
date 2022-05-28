@@ -17,6 +17,11 @@ function myFunction(){
         data = JSON.parse(data)
         text=""
         text = text + `<p>${data["contents"][window.count]}</p>`;
+        document.getElementById("header-file").innerHTML = ` 
+        <h2 style="text-align:center;color:black">${window.file_name}</h2>
+        <h3 style="text-align:center;color:black">File name:-${window.file_id}</h3>
+        `
+        document.getElementById("cont-num").innerHTML = `<p style="margin-left:20vw;font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Sentence :- ${window.count}</p>`
         document.getElementById("context-q").innerHTML=text
     })
 }
@@ -32,6 +37,7 @@ function sentload(){
         data = JSON.parse(data)
         text=""
         text = text + `<p>${data["contents"][window.count]}</p>`;
+        document.getElementById("cont-num").innerHTML = `<p style="margin-left:20vw;font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Sentence :- ${window.count}</p>`
         document.getElementById("context-q").innerHTML=text
     })
 
@@ -47,6 +53,7 @@ function prevload(){
         data = JSON.parse(data)
         text=""
         text = text + `<p>${data["contents"][window.count]}</p>`;
+        document.getElementById("cont-num").innerHTML = `<p style="margin-left:20vw;font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Sentence :- ${window.count}</p>`
         document.getElementById("context-q").innerHTML=text
     })
 

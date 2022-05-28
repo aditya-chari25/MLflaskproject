@@ -5,13 +5,105 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Updation</title>
+    <link rel="stylesheet" href="updation.css">
     <script src="./script_up.js"></script>
 </head>
 <body onload="myFunction();counter()">
-    <div id="context-q" class="context"></div>
-    <button id="prevb"onclick = "prevload()" disabled>Previous</button>
+    <h1 style="text-align:center;color:blue;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"> ML PROJECT</h1>
+    <div id ="header-file"></div>
+    <div id ="cont-num"></div>
+    <div id="context-q" class="context" style="margin-left: 25vw;font-family: Arial, Helvetica, sans-serif;width: 50vw;"></div>
+    <div style="display:flex;justify-content: center;">
+    <button id="prevb"onclick = "prevload()" disabled style="margin-right: 20px;">Previous</button>
     <button id="nextb"onclick="sentload()">Next</button>
+    </div>
 
+    <div class="row">
+        <div class="column">
+          <div class="card-options">
+            <h3>Relevance</h3>
+            <form class="form-nums" id="relevance">
+                <input type="radio" id="html" name=relevant value="yes">
+                <label for="Yes">Yes</label><br>
+                <input type="radio" id="html1" name=relevant value="no">
+                <label for="No">No</label><br>
+            </form>        
+          </div>
+        </div>
+      
+        <div class="column">
+          <div class="card-options">
+            <h3>Sentiment</h3>
+            <form class="form-nums" id="senti">
+                <input type="radio" id="html" name=posneg value="Positive">
+                <label for="pos">Positive</label><br>
+                <input type="radio" id="html1" name=posneg value="Negative">
+                <label for="neg">Negative</label><br>
+                <input type="radio" id="html1" name=posneg value="Neutral">
+                <label for="neu">Neutral</label><br>
+            </form>
+          </div>
+        </div>
+        
+        <div class="column">
+          <div class="card-options">
+            <h3>Type</h3>
+            <form class="form-nums" id="senti">
+                <input type="radio" id="html" name=opce value="Fact">
+                <label for="pos">Fact</label><br>
+                <input type="radio" id="html1" name=opce value="Opinion">
+                <label for="neg">Opinion</label><br>
+                <input type="radio" id="html1" name=opce value="Cause">
+                <label for="neu">Cause</label><br>
+                <input type="radio" id="html1" name=opce value="Effect">
+                <label for="neu">Effect</label><br>
+            </form>
+          </div>
+        </div>
+        
+        <div class="column">
+          <div class="card-options">
+            <h3>Timeline</h3>
+            <form class="form-nums" id="senti">
+                <input type="radio" id="html" name=timeline value="Past">
+                <label for="pos">Past/Retrospective</label><br>
+                <input type="radio" id="html1" name=timeline value="Future">
+                <label for="neg">Future/Prospective</label><br>
+            </form>
+          </div>
+        </div>
+        <div class="column">
+            <div class="card-options">
+              <h3>Business Function referenced</h3>
+              <form class="form-nums" id="senti">
+                <input type="radio" id="html" name=bfr value="Marketing">
+                <label for="pos">Marketing/Customers</label><br>
+                <input type="radio" id="html1" name=bfr value="Finance">
+                <label for="neg">Finance</label><br>
+                <input type="radio" id="html1" name=bfr value="Talent">
+                <label for="neu">Human Resources/Talent</label><br>
+                <input type="radio" id="html1" name=bfr value="PorC">
+                <label for="neu">Products/Offerings</label><br>
+                <input type="radio" id="html1" name=bfr value="Strategy">
+                <label for="neu">Strategy</label><br>
+                <input type="radio" id="html1" name=bfr value="Operations">
+                <label for="neu">Operations</label><br>
+            </form>
+            </div>
+          </div>
+          <div class="column">
+            <div class="card-options">
+              <h3>External Market:</h3>
+              <form class="form-nums" id="senti">
+                <input type="radio" id="html" name=extm value="Past">
+                <label for="pos">Demand</label><br>
+                <input type="radio" id="html1" name=extm value="Future">
+                <label for="neg">Supply</label><br>
+            </form>
+            </div>
+          </div>
+      </div>
+      
 
 
 

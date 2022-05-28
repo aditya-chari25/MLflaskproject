@@ -27,6 +27,7 @@ function retrieveName (e) {
             <label for="hello">${data[i]['_id']['$oid']}</label>` + "<br>";
         }
         text = text+'<input type="submit" value="Submit"></input>'
+        document.getElementById('outhead').innerHTML = `<h3> Filter By Document Id</h3>`
         document.getElementById('output').innerHTML = text
     })
 }
