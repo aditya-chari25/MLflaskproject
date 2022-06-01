@@ -52,7 +52,6 @@ def returnques(name,ids):
 
     alldocs1 = db[name].find(query)
     for x in alldocs1:
-        print(x)
         all_docs=json_util.dumps(x)
 
     return jsonify(all_docs)
@@ -66,7 +65,28 @@ def returnques1(name,ids,con):
 
     alldocs1 = db[name].find(query)
     for x in alldocs1:
-        print(x)
         all_docs=json_util.dumps(x)
 
     return jsonify(all_docs)
+
+@app.route('/<name>/<ids>/<con>/<item1>/<item2>/<item3>/<item4>/<item5>/<item6>',methods=['GET','POST'])
+def array_postnum(name,ids,con,item1,item2,item3,item4,item5,item6):
+    arr = [item1,item2,item3,item4,item5,item6]
+    arrins=[]
+    for arr1 in arr:
+        if(arr1 != "''"):
+            arrins.append(arr1)
+    print(arrins)
+    dbins = db['Label_Collection']
+    dbins.insert_one({'file_id':ids,'company':name,'sentnum':con,'labels':arrins})
+    success = {'first':arrins}
+    return success
+
+# @app.route('/labeling/<name>/<ids>/<con>',methods=['GET','POST'])
+# def array_post(name,ids,con):
+#     if request.method =='POST':
+#         a = request.form.getlist("contacts[]")
+#         for x in a:
+#             print(x)
+#     print("I am in array_post function",name,ids,con)
+#     return " "
