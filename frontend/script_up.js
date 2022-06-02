@@ -10,6 +10,7 @@ function counter(){
 
 
 function myFunction(){
+    window.checker=0
     window.file_name = localStorage.getItem("file_ml");  
     window.file_id = localStorage.getItem("idq");
     if(window.count=="undefined"){
@@ -41,9 +42,11 @@ function myFunction(){
         document.getElementById('respost').innerHTML = `<p style="color:red">Labels already selected: _____________</p>`}
         console.log(window.checker)
     })
+    
 }
 
 function sentload(){
+    window.checker=0
     window.count = window.count+1
     document.getElementById("prevb").disabled=false
     window.file_name = localStorage.getItem("file_ml");  
@@ -74,6 +77,7 @@ function sentload(){
 }
 
 function prevload(){
+    window.checker=0
     window.count = window.count-1
     window.file_name = localStorage.getItem("file_ml");  
     window.file_id = localStorage.getItem("idq");
@@ -158,13 +162,22 @@ function sublabels(){
 
     alert(array5)
 
+    if(window.checker==0){
     fetch(`http://localhost:5000/${window.file_name}/${window.file_id}/${window.count}/${relevant}/${posneg}/${opce}/${timeline}/${bfr}/${extm}`)
     .then((res)=> res.json())
     .then((data)=> {
         //document.getElementById('respost') = data.first
-        document.getElementById('respost') = `<p>Hello World</p>`
-        alert("bye")
+        document.getElementById('respost').innerHTML = `<p style="color:red">Sentence ${window.count}:-Labels already selected: ${data['first']}</p>`
+    })}
+    else{
+    fetch(`http://localhost:5000/updater/${window.file_name}/${window.file_id}/${window.count}/${relevant}/${posneg}/${opce}/${timeline}/${bfr}/${extm}`)
+    .then((res)=> res.json())
+    .then((data)=> {
+        //document.getElementById('respost') = data.first
+        document.getElementById('respost').innerHTML = `<p style="color:red">Sentence ${window.count}:- Labels already selected: ${data['first']}</p>`
     })
+    }
+    sentload()
 
     //-----------------------
 

@@ -71,10 +71,9 @@ def returnques1(name,ids,con):
 
 @app.route('/checker/<name>/<ids>/<con>',methods=['GET'])
 def checklabel(name,ids,con):
-    print("hello checklabel")
     if(con=="undefined"):
         con='0'
-    query = {'file_id':ids}
+    query = {'file_id':ids,'sentnum':con}
     dbins = db['Label_Collection']
     arrvar=[]
     alldor = dbins.find(query)
@@ -82,12 +81,25 @@ def checklabel(name,ids,con):
         if(x['sentnum']==con):
             arrvar.append(x['labels'])
     retlabel={}
-    if(alldor):
+    if(len(arrvar)):
         retlabel={'labels':arrvar,'present':'yes'}
         return retlabel
     else:
         retlabel={'labels':[],'present':'no'}
         return retlabel
+
+@app.route('/updater/<name>/<ids>/<con>/<item1>/<item2>/<item3>/<item4>/<item5>/<item6>',methods=['GET'])
+def updation(name,ids,con,item1,item2,item3,item4,item5,item6):
+    print("welcome to updation:-")
+    arr = [item1,item2,item3,item4,item5,item6]
+    arrins=[]
+    for arr1 in arr:
+        if(arr1 != "na"):
+            arrins.append(arr1)
+    dbins = db['Label_Collection']
+    dbins.update_one({"file_id":ids,'sentnum':con},{"$set":{"labels":arrins}})
+    mes = {'first':arrins}
+    return mes
 
 
 @app.route('/<name>/<ids>/<con>/<item1>/<item2>/<item3>/<item4>/<item5>/<item6>',methods=['GET','POST'])
