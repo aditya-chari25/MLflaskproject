@@ -18,16 +18,18 @@
     <button id="prevb"onclick = "prevload()" disabled style="margin-right: 20px;">Previous</button>
     <button id="nextb"onclick="sentload()">Next</button>
     </div>
+    <div id="respost" style="justify-content: center;display: flex;">
+    </div>
 
-   
+    <form class="form-nums" id="labeloptions">
     <div class="row">
-      <form class="form-nums" id="labeloptions">
+      
         <div class="column">
           <div class="card-options">
             <h3>Relevance</h3>
-                <input type="radio" id="html" name=relevant value="yes">
+                <input type="radio" id="html" name=relevant value="Yes">
                 <label for="Yes">Yes</label><br>
-                <input type="radio" id="html1" name=relevant value="no">
+                <input type="radio" id="html1" name=relevant value="No">
                 <label for="No">No</label><br>     
           </div>
         </div>
@@ -93,12 +95,13 @@
                 <label for="neg">Supply</label><br>
             </div>
           </div>
-          <input type="button" value="Submit Labels" onclick="sublabels()"/>
-        </form>
       </div>
+        <div style="display: flex;justify-content:center ;">
+          <input type="button" value="Submit Labels" onclick="sublabels()"/></div>
+        </div>
+        </form>
       
-    <div id="respost">
-    </div>
+    
 
 </body>
 </html>

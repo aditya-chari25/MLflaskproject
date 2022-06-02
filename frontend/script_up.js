@@ -1,6 +1,7 @@
 var file_name
 var file_id 
 var count
+var checker=0
 
 function counter(){
     window.count = 0;
@@ -11,6 +12,8 @@ function counter(){
 function myFunction(){
     window.file_name = localStorage.getItem("file_ml");  
     window.file_id = localStorage.getItem("idq");
+    if(window.count=="undefined"){
+    window.count = 0;}
     fetch(`http://localhost:5000/${window.file_name}/${window.file_id}/${window.count}`)
     .then((res)=> res.json())
     .then((data)=> {
@@ -23,6 +26,20 @@ function myFunction(){
         `
         document.getElementById("cont-num").innerHTML = `<p style="margin-left:20vw;font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Sentence :- ${window.count}</p>`
         document.getElementById("context-q").innerHTML=text
+    })
+
+    fetch(`http://localhost:5000/checker/${window.file_name}/${window.file_id}/${window.count}`)
+    .then((res)=> res.json())
+    .then((data)=> {
+        window.checker=0
+        if(data['present']=='yes'){
+        console.log(data['labels'])
+        window.checker=1
+        document.getElementById('respost').innerHTML = `<p style="color:red">Labels already selected: ${data['labels']}</p>`}
+        else{
+        window.checker=0
+        document.getElementById('respost').innerHTML = `<p style="color:red">Labels already selected: _____________</p>`}
+        console.log(window.checker)
     })
 }
 
@@ -41,6 +58,19 @@ function sentload(){
         document.getElementById("context-q").innerHTML=text
     })
 
+    fetch(`http://localhost:5000/checker/${window.file_name}/${window.file_id}/${window.count}`)
+    .then((res)=> res.json())
+    .then((data)=> {
+        window.checker=0
+        if(data['present']=='yes'){
+        console.log(data['labels'])
+        window.checker=1
+        document.getElementById('respost').innerHTML = `<p style="color:red">Labels already selected: ${data['labels']}</p>`}
+        else{
+        window.checker=0
+        document.getElementById('respost').innerHTML = `<p style="color:red">Labels already selected: _____________</p>`}
+    })
+
 }
 
 function prevload(){
@@ -57,11 +87,24 @@ function prevload(){
         document.getElementById("context-q").innerHTML=text
     })
 
+    fetch(`http://localhost:5000/checker/${window.file_name}/${window.file_id}/${window.count}`)
+    .then((res)=> res.json())
+    .then((data)=> {
+        window.checker=0
+        if(data['present']=='yes'){
+        console.log(data['labels'])
+        window.checker=1
+        document.getElementById('respost').innerHTML = `<p style="color:red">Labels already selected: ${data['labels']}</p>`}
+        else{
+        window.checker=0
+        document.getElementById('respost').innerHTML = `<p style="color:red">Labels already selected: _____________</p>`}
+    })
+
 }
 
 
 function sublabels(){
-    var relevant='',posneg='',opce='',timeline='',bfr='',extm=''
+    var relevant='na',posneg='na',opce='na',timeline='na',bfr='na',extm='na'
     var rad1 = document.getElementsByName('relevant') //relevant
     var rad2 = document.getElementsByName('posneg') //posneg
     var rad3 = document.getElementsByName('opce') //opce

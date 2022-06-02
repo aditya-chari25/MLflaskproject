@@ -69,12 +69,33 @@ def returnques1(name,ids,con):
 
     return jsonify(all_docs)
 
+@app.route('/checker/<name>/<ids>/<con>',methods=['GET'])
+def checklabel(name,ids,con):
+    print("hello checklabel")
+    if(con=="undefined"):
+        con='0'
+    query = {'file_id':ids}
+    dbins = db['Label_Collection']
+    arrvar=[]
+    alldor = dbins.find(query)
+    for x in alldor:
+        if(x['sentnum']==con):
+            arrvar.append(x['labels'])
+    retlabel={}
+    if(alldor):
+        retlabel={'labels':arrvar,'present':'yes'}
+        return retlabel
+    else:
+        retlabel={'labels':[],'present':'no'}
+        return retlabel
+
+
 @app.route('/<name>/<ids>/<con>/<item1>/<item2>/<item3>/<item4>/<item5>/<item6>',methods=['GET','POST'])
 def array_postnum(name,ids,con,item1,item2,item3,item4,item5,item6):
     arr = [item1,item2,item3,item4,item5,item6]
     arrins=[]
     for arr1 in arr:
-        if(arr1 != "''"):
+        if(arr1 != "na"):
             arrins.append(arr1)
     print(arrins)
     dbins = db['Label_Collection']
