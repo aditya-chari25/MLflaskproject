@@ -3,6 +3,10 @@ var file_id
 var count
 var checker=0
 
+function ClearForm(){
+    document.getElementById('labeloptions').reset();
+}
+
 function counter(){
     window.count = 0;
 }
@@ -19,6 +23,7 @@ function myFunction(){
     .then((res)=> res.json())
     .then((data)=> {
         data = JSON.parse(data)
+        console.log(data)
         text=""
         text = text + `<p>${data["contents"][window.count]}</p>`;
         document.getElementById("header-file").innerHTML = ` 

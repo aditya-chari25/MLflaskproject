@@ -35,11 +35,15 @@ def returnAll():
 @app.route('/<name>',methods=['GET'])
 def returnIds(name):
     global vartemp
-    coll_display = db[name]
+    # coll_display = db[name]
     global var_collections 
     var_collections=[]
-    for rec in coll_display.find():
-        var_collections.append(rec)
+    query = {'ticker_symbol':name}
+    mydoc = db['file_corpus'].find(query)
+    for x in mydoc:
+            var_collections.append(x)
+    # for rec in coll_display.find():
+    #     var_collections.append(rec)
     colec = json_util.dumps(var_collections)
     return jsonify(colec)
 
@@ -50,7 +54,7 @@ def returnques(name,ids):
     query = {'_id':ObjectId(ids)}
     all_docs=[]
 
-    alldocs1 = db[name].find(query)
+    alldocs1 = db['file_corpus'].find(query)
     for x in alldocs1:
         all_docs=json_util.dumps(x)
 
@@ -63,8 +67,10 @@ def returnques1(name,ids,con):
     query = {'_id':ObjectId(ids)}
     all_docs=[]
 
-    alldocs1 = db[name].find(query)
+    alldocs1 = db['file_corpus'].find(query)
+    print(alldocs1)
     for x in alldocs1:
+        print(x)
         all_docs=json_util.dumps(x)
 
     return jsonify(all_docs)
@@ -74,7 +80,7 @@ def checklabel(name,ids,con):
     if(con=="undefined"):
         con='0'
     query = {'file_id':ids,'sentnum':con}
-    dbins = db['Label_Collection']
+    dbins = db['labelled_sentences']
     arrvar=[]
     alldor = dbins.find(query)
     for x in alldor:
@@ -96,7 +102,7 @@ def updation(name,ids,con,item1,item2,item3,item4,item5,item6):
     for arr1 in arr:
         if(arr1 != "na"):
             arrins.append(arr1)
-    dbins = db['Label_Collection']
+    dbins = db['labelled_sentences']
     dbins.update_one({"file_id":ids,'sentnum':con},{"$set":{"labels":arrins}})
     mes = {'first':arrins}
     return mes
@@ -110,8 +116,18 @@ def array_postnum(name,ids,con,item1,item2,item3,item4,item5,item6):
         if(arr1 != "na"):
             arrins.append(arr1)
     print(arrins)
-    dbins = db['Label_Collection']
-    dbins.insert_one({'file_id':ids,'company':name,'sentnum':con,'labels':arrins})
+    dbins = db['labelled_sentences']
+    all_docs=[]
+
+    query = {'_id':ObjectId(ids)}
+    alldocs1 = db['file_corpus'].find(query)
+    print(alldocs1)
+    for x in alldocs1:
+        print(x)
+        all_docs.append(x)
+
+    dbins.insert_one({'file_id':ids,'company':name,'sentnum':con,'labels':arrins,'sentence':all_docs[0]['contents'][int(con)]})
+    print(all_docs[0]['contents'][int(con)])
     success = {'first':arrins}
     return success
 
