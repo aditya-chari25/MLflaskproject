@@ -68,9 +68,9 @@ def returnques1(name,ids,con):
     all_docs=[]
 
     alldocs1 = db['file_corpus'].find(query)
-    print(alldocs1)
+    # print(alldocs1)
     for x in alldocs1:
-        print(x)
+        #print(x)
         all_docs=json_util.dumps(x)
 
     return jsonify(all_docs)
@@ -102,31 +102,72 @@ def updation(name,ids,con,item1,item2,item3,item4,item5,item6):
     for arr1 in arr:
         if(arr1 != "na"):
             arrins.append(arr1)
+    #---------------------------------------------------------------
+    arr1 = ["Relevance","Sentiment","Type","Timeline","Bfr","Extm"]
+    dblabeller = db['topic_labels']
+    tracking=[]
+    k=0
+    for x in arr1:
+        query1 = {'set_name':x}
+        quesearch=dblabeller.find(query1)
+        print(quesearch)
+        for y in quesearch:
+            for z in y['labels_array']:
+                print('inside labels_array:',z)
+                if(arr[k]=="na"):
+                    print(k)
+                else:
+                    if(arr[k]==z['label_name']):
+                        tracking.append({arr[k]:z['label_id']})
+                        print(k)
+        k=k+1
+    #---------------------------------------------------------------
     dbins = db['labelled_sentences']
-    dbins.update_one({"file_id":ids,'sentnum':con},{"$set":{"labels":arrins}})
+    dbins.update_one({"file_id":ids,'sentnum':con},{"$set":{"labels":arrins,"labelling":tracking}})
     mes = {'first':arrins}
     return mes
 
 
 @app.route('/<name>/<ids>/<con>/<item1>/<item2>/<item3>/<item4>/<item5>/<item6>',methods=['GET','POST'])
 def array_postnum(name,ids,con,item1,item2,item3,item4,item5,item6):
+
     arr = [item1,item2,item3,item4,item5,item6]
     arrins=[]
     for arr1 in arr:
         if(arr1 != "na"):
             arrins.append(arr1)
     print(arrins)
+    #-----------------------------------------------------------------------------------
     dbins = db['labelled_sentences']
     all_docs=[]
-
     query = {'_id':ObjectId(ids)}
     alldocs1 = db['file_corpus'].find(query)
     print(alldocs1)
     for x in alldocs1:
-        print(x)
         all_docs.append(x)
+    #-------------------------------------------------------------------------------------
+    arr1 = ["Relevance","Sentiment","Type","Timeline","Bfr","Extm"]
+    dblabeller = db['topic_labels']
+    tracking=[]
+    k=0
+    for x in arr1:
+        query1 = {'set_name':x}
+        quesearch=dblabeller.find(query1)
+        print(quesearch)
+        for y in quesearch:
+            for z in y['labels_array']:
+                print('inside labels_array:',z)
+                if(arr[k]=="na"):
+                    print(k)
+                else:
+                    if(arr[k]==z['label_name']):
+                        tracking.append({arr[k]:z['label_id']})
+                        print(k)
+        k=k+1
+    print(tracking)
+    #---------------------------------------------------------------------------------------
 
-    dbins.insert_one({'file_id':ids,'company':name,'sentnum':con,'labels':arrins,'sentence':all_docs[0]['contents'][int(con)]})
+    dbins.insert_one({'file_id':ids,'company':name,'sentnum':con,'labels':arrins,'sentence':all_docs[0]['contents'][int(con)],'labelling':tracking})
     print(all_docs[0]['contents'][int(con)])
     success = {'first':arrins}
     return success
