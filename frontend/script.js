@@ -24,7 +24,7 @@ function retrieveName (e) {
         text=""
         for(i=0;i<data.length;i++){
             text = text + `<input type="radio" id="hello" name="nameid" value=${data[i]['_id']['$oid']} class="list-group-item">
-            <label for="hello">${data[i]['_id']['$oid']}</label>` + "<br>";
+            <label for="hello">${i} . ${data[i]['_id']['$oid']}</label>` + "<br>";
         }
         text = text+'<input type="submit" value="Submit"></input>'
         document.getElementById('outhead').innerHTML = `<h3> Filter By Document Id</h3>`

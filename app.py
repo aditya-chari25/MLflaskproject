@@ -13,12 +13,12 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'application/json'
 
 try:
-    conn = MongoClient()
+    conn = MongoClient('localhost', 27017)
     print("Connected successfully!!!")
 except:  
     print("Could not connect to MongoDB")
 
-db=conn.mlproject
+db=conn.mlproject  
 
 col_array =[]
 for coll_name in db.list_collection_names():
@@ -27,9 +27,18 @@ for coll_name in db.list_collection_names():
 vartemp=[]
 var_collections=[]
 query=[]
+minq=0
+maxq=0
 
 @app.route('/')
 def returnAll():
+    db1=db['file_corpus']
+    print("hello")
+    arr_x=[]
+    sum=0
+    for x in db1.find():
+        sum = sum + len(x['contents'])
+    print(sum)
     return json.dumps(col_array)
 
 @app.route('/<name>',methods=['GET'])
