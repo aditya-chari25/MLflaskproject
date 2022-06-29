@@ -1,5 +1,7 @@
 var name
 var id_selected
+var minLen
+var maxLen
 
 document.getElementById('formData').addEventListener('submit', retrieveName)
 
@@ -47,17 +49,43 @@ function retrieveID(e){
     localStorage.setItem("file_ml",window.name)
     console.log(window.id_selected)
     localStorage.setItem("idq",window.id_selected)
-    window.open("updation.html")
-    fetch(`http://localhost:5000/${window.name}/${window.id_selected}`)
-    .then((res)=> res.json())
-    .then((data)=> {
-        data = JSON.parse(data)
-        text=""
-        for(i=0;i<data["contents"].length;i++){
-            text = text + `<p>${data["contents"][i]}</p>`;
-        }
-        document.getElementById("context-q").innerHTML=text
-    })
+
+    text = ""
+    text = text + `  <label for="minLength">Min length:</label>
+    <input type="text" id="minLen" name="minLen" value="John"><br>
+    <label for="maxLength">Max length:</label>
+    <input type="text" id="maxLen" name="maxLen" value="Doe"><br><br>
+    <input type="submit" value="Submit"></input>`
+
+    document.getElementById('page-out').innerHTML = text
+    //window.open("updation.html")
+    // fetch(`http://localhost:5000/${window.name}/${window.id_selected}`)
+    // .then((res)=> res.json())
+    // .then((data)=> {
+    //     data = JSON.parse(data)
+    //     text=""
+    //     for(i=0;i<data["contents"].length;i++){
+    //         text = text + `<p>${data["contents"][i]}</p>`;
+    //     }
+    //     document.getElementById("page-num").innerHTML=text
+    // })
 
 }
+
+document.getElementById('page-out').addEventListener('submit', pageID)
+
+function pageID(e){
+    e.preventDefault()
+
+    window.minLen = document.getElementById('minLen').value
+    window.maxLen = document.getElementById('maxLen').value
+    localStorage.setItem("proj_minq",window.minLen)
+    localStorage.setItem("proj_maxq",window.maxLen)
+    console.log(window.minLen)
+    console.log(window.maxLen)
+
+    window.open("updation.html")
+}
+
+
 

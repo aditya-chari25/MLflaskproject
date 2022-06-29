@@ -2,6 +2,8 @@ var file_name
 var file_id 
 var count
 var checker=0
+var minLen
+var maxLen
 
 function ClearForm(){
     document.getElementById('labeloptions').reset();
@@ -17,6 +19,9 @@ function myFunction(){
     window.checker=0
     window.file_name = localStorage.getItem("file_ml");  
     window.file_id = localStorage.getItem("idq");
+    window.minLen = localStorage.getItem("proj_minq")
+    window.maxLen = localStorage.getItem("proj_maxq")
+
     if(window.count=="undefined"){
     window.count = 0;}
     fetch(`http://localhost:5000/${window.file_name}/${window.file_id}/${window.count}`)
@@ -26,6 +31,17 @@ function myFunction(){
         console.log(data)
         text=""
         text = text + `<p>${data["contents"][window.count]}</p>`;
+
+        const arr = text.split(' ');
+
+        var lensent =  arr.filter(word => word !== '').length;
+        console.log(lensent,parseInt(window.minLen),parseInt(window.maxLen))
+
+        if(lensent < parseInt(window.minLen) || lensent > parseInt(window.maxLen))
+        {
+            sentload()
+            return
+        }
         document.getElementById("header-file").innerHTML = ` 
         <h2 style="text-align:center;color:black">${window.file_name}</h2>
         <h3 style="text-align:center;color:black">File name:-${window.file_id}</h3>
@@ -51,6 +67,7 @@ function myFunction(){
 }
 
 function sentload(){
+    console.log("hello1")
     window.checker=0
     window.count = window.count+1
     document.getElementById("prevb").disabled=false
@@ -62,6 +79,17 @@ function sentload(){
         data = JSON.parse(data)
         text=""
         text = text + `<p>${data["contents"][window.count]}</p>`;
+        const arr = text.split(' ');
+
+        var lensent =  arr.filter(word => word !== '').length;
+        console.log(lensent,parseInt(window.minLen),parseInt(window.maxLen))
+
+        if(lensent < parseInt(window.minLen) || lensent > parseInt(window.maxLen))
+        {
+            sentload()
+            return
+        }
+        
         document.getElementById("cont-num").innerHTML = `<p style="margin-left:20vw;font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Sentence :- ${window.count}</p>`
         document.getElementById("context-q").innerHTML=text
     })
