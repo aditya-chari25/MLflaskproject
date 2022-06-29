@@ -51,9 +51,9 @@ function retrieveID(e){
     localStorage.setItem("idq",window.id_selected)
 
     text = ""
-    text = text + `  <label for="minLength">Min length:</label>
+    text = text + `  <label for="minLength">Min Word Length:</label>
     <input type="text" id="minLen" name="minLen" value="John"><br>
-    <label for="maxLength">Max length:</label>
+    <label for="maxLength">Max Word Length:</label>
     <input type="text" id="maxLen" name="maxLen" value="Doe"><br><br>
     <input type="submit" value="Submit"></input>`
 
